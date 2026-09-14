@@ -27,6 +27,40 @@ const months = [
   "December",
 ];
 
+//default
+const eventArr = [
+  {
+    day: 14,
+    month: 9,
+    year: 2026,
+    events: [
+      {
+        title: "Event 1 lorem ipsum dolor set",
+        time: "10:00 AM",
+      },
+      {
+        title: "Event 2",
+        time: "11:00 AM",
+      },
+    ],
+  },
+  {
+    day: 16,
+    month: 9,
+    year: 2026,
+    events: [
+      {
+        title: "Event 1 lorem ipsum dolor set",
+        time: "10:00 AM",
+      },
+      {
+        title: "Event 2",
+        time: "11:00 AM",
+      },
+    ],
+  },
+];
+
 // function hari
 
 function initCalendar() {
@@ -51,19 +85,42 @@ function initCalendar() {
 
   //month n day
   for (let i = 1; i <= lastDate; i++) {
+    //check event hari yang di klik
+
+    let event = false;
+    eventArr.forEach((eventObj) => {
+      if (
+        eventObj.day == i &&
+        eventObj.month == month + 1 &&
+        eventObj.year == year
+      ) {
+        event = true;
+      }
+    });
+
     //kalau day adalah today tambah class today
     if (
       i == new Date().getDate() &&
       year == new Date().getFullYear() &&
       month == new Date().getMonth()
     ) {
-      days += `<div class="day today">${i}</div>`;
+      // if event found tambah event class
+      if (event) {
+        days += `<div class="day today event" >${i}</div>`;
+      } else {
+        days += `<div class="day today">${i}</div>`;
+      }
     }
-    // tanggal sisanya
+    // sisanya
     else {
-      days += `<div class="day">${i}</div>`;
+      if (event) {
+        days += `<div class="day event">${i}</div>`;
+      } else {
+        days += `<div class="day">${i}</div>`;
+      }
     }
   }
+
   //month n day selanjutnya
   for (let j = 1; j <= nextDays; j++) {
     days += `<div class="day next-date">${j}</div>`;
@@ -143,3 +200,59 @@ function gotoDate() {
   }
   alert("Invalid Date!");
 }
+
+const addEventBtn = document.querySelector(".add-event"),
+  addEventContainer = document.querySelector(".add-event-wrapper"),
+  addEventCloseBtn = document.querySelector(".close"),
+  addEventTitle = document.querySelector(".event-name"),
+  addEventFrom = document.querySelector(".event-time-from"),
+  addEventTo = document.querySelector(".event-time-to");
+
+addEventBtn.addEventListener("click", () => {
+  addEventContainer.classList.toggle("active");
+});
+
+addEventCloseBtn.addEventListener("click", () => {
+  addEventContainer.classList.remove("active");
+});
+
+document.addEventListener("click", (e) => {
+  //click diluar wrapper
+  if (e.target != addEventBtn && !addEventContainer.contains(e.target)) {
+    addEventContainer.classList.remove("active");
+  }
+});
+
+// hanya 50 char
+addEventTitle.addEventListener("input", (e) => {
+  addEventTitle.value = addEventTitle.value.slice(0, 50);
+});
+
+// format waktu
+
+addEventFrom.addEventListener("input", (e) => {
+  addEventFrom.value = addEventFrom.value.replace(/[^0-9:]/g, "");
+  //sedtelah 2 char tambahkan :
+  if (addEventFrom.value.length == 2) {
+    addEventFrom.value += ":";
+  }
+  // tidak bisa lebih dari 5 char
+  if (addEventFrom.value.length > 5) {
+    addEventFrom.value = addEventFrom.value.slice(0, 5);
+  }
+});
+//to time
+addEventTo.addEventListener("input", (e) => {
+  addEventTo.value = addEventTo.value.replace(/[^0-9:]/g, "");
+  //sedtelah 2 char tambahkan :
+  if (addEventTo.value.length == 2) {
+    addEventTo.value += ":";
+  }
+  // tidak bisa lebih dari 5 char
+  if (addEventTo.value.length > 5) {
+    addEventTo.value = addEventTo.value.slice(0, 5);
+  }
+});
+
+
+// tambah event
