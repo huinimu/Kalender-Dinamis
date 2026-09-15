@@ -126,6 +126,8 @@ function initCalendar() {
     days += `<div class="day next-date">${j}</div>`;
   }
   daysContainer.innerHTML = days;
+  // balik ka kondisi awal/default
+  addListner();
 }
 
 initCalendar();
@@ -256,3 +258,36 @@ addEventTo.addEventListener("input", (e) => {
 
 
 // tambah event
+function addListner() {
+  const days = document.querySelectorAll(".day");
+  days.forEach((day) => {
+    day.addEventListener("click", (e) => {
+      // hari menjadi aktif
+      activeDay = Number(e.target.innerHTML);
+
+      // 
+      days.forEach((day) => {
+        day.classList.remove("active");
+      });
+
+      // menambahkan aktif di bulan sebelumnya
+      if(e.target.classList.contains("prev-date")) {
+        prevMonth();
+
+        setTimeout(() => {
+          // select class day
+          const days = document.querySelectorAll(".day");
+
+          days.forEach((day) => {
+            if(
+              !day.classList.contains("prev-date") &&
+              day.innerHTML == e.target.innerHTML
+            ) {
+              day.classList.add("active");
+            }
+        });
+      });
+    }
+  });
+});
+}
