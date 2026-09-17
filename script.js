@@ -1,11 +1,15 @@
 const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
   daysContainer = document.querySelector(".days"),
-  prev = document.querySelector(".prev");
-((next = document.querySelector(".next")),
-  (todayBtn = document.querySelector(".today-btn")),
-  (gotoBtn = document.querySelector(".goto-btn")),
-  (dateInput = document.querySelector(".date-input")));
+  prev = document.querySelector(".prev"),
+  next = document.querySelector(".next"),
+  todayBtn = document.querySelector(".today-btn"),
+  gotoBtn = document.querySelector(".goto-btn"),
+  dateInput = document.querySelector(".date-input"),
+  eventDay = document.querySelector(".event-day"),
+  eventDate = document.querySelector(".event-date"),
+  eventsContainer = document.querySelector(".events"),
+  addEventSubmit = document.querySelector(".add-event-btn");
 
 let today = new Date();
 let activeDay;
@@ -27,39 +31,9 @@ const months = [
   "December",
 ];
 
-//default
-const eventArr = [
-  {
-    day: 14,
-    month: 9,
-    year: 2026,
-    events: [
-      {
-        title: "Event 1 lorem ipsum dolor set",
-        time: "10:00 AM",
-      },
-      {
-        title: "Event 2",
-        time: "11:00 AM",
-      },
-    ],
-  },
-  {
-    day: 16,
-    month: 9,
-    year: 2026,
-    events: [
-      {
-        title: "Event 1 lorem ipsum dolor set",
-        time: "10:00 AM",
-      },
-      {
-        title: "Event 2",
-        time: "11:00 AM",
-      },
-    ],
-  },
-];
+//array kosong
+let eventArr = [];
+getEvents();
 
 // function hari
 
@@ -104,11 +78,18 @@ function initCalendar() {
       year == new Date().getFullYear() &&
       month == new Date().getMonth()
     ) {
+
+    activeDay = i;  
+    getActiveDay(i);
+    updateEvents(i);
+    
+
       // if event found tambah event class
+      // tambah active ke hari ini
       if (event) {
-        days += `<div class="day today event" >${i}</div>`;
+        days += `<div class="day today active event" >${i}</div>`;
       } else {
-        days += `<div class="day today">${i}</div>`;
+        days += `<div class="day today active">${i}</div>`;
       }
     }
     // sisanya
@@ -164,7 +145,7 @@ todayBtn.addEventListener("click", () => {
   today = new Date();
   month = today.getMonth();
   year = today.getFullYear();
-  initCalendar;
+  initCalendar();
 });
 
 dateInput.addEventListener("input", (e) => {
@@ -265,7 +246,11 @@ function addListner() {
       // hari menjadi aktif
       activeDay = Number(e.target.innerHTML);
 
-      // 
+      // panggil active day setelah click
+      getActiveDay(e.target.innerHTML);
+      updateEvents(Number(e.target.innerHTML));
+
+      //  hapus active dari hari yamg sudah aktif
       days.forEach((day) => {
         day.classList.remove("active");
       });
@@ -286,8 +271,211 @@ function addListner() {
               day.classList.add("active");
             }
         });
-      });
+      }, 100);
+      //aktif di bulan selanjutnya
+    } else if(e.target.classList.contains("next-date")) {
+        nextMonth();
+
+        setTimeout(() => {
+          // select class day
+          const days = document.querySelectorAll(".day");
+
+          days.forEach((day) => {
+            if(
+              !day.classList.contains("next-date") &&
+              day.innerHTML == e.target.innerHTML
+            ) {
+              day.classList.add("active");
+            }
+        });
+      }, 100);
+    }
+    else{
+      //month day saat ini
+      e.target.classList.add("active");
     }
   });
 });
 }
+
+// tampilkan active day dan event diatas
+     
+function getActiveDay(date){
+  const day = new Date (year , month , date);
+  const dayName = day.toString().split(" ")[0];
+  eventDay.innerHTML = dayName;
+  eventDate.innerHTML = date + " " + months[month]+ " " + year;
+
+}
+
+//munculkan event hari yang di klik
+
+function updateEvents(date){
+  let events = "";
+  eventArr.forEach((event) =>{
+    //hanya event active day
+    if(
+      date == event.day &&
+      month + 1 == event.month &&
+      year == event.year
+    ){
+
+      // munculkan event di document
+      event.events.forEach((event) => {
+        events += `
+        <div class="event">
+          <div class="title">
+            <i class="fas fa-circle"></i>
+            <h3 class="event-title">${event.title}</h3>
+          </div>
+          <div class="event-time">
+            <span class="event-time">${event.time}</span>
+          </div>
+        </div>
+        `;
+      });
+    }
+  });
+
+  // kalau tidak ada event
+  if(events == ""){
+    events = `<div class="no-event">
+                <h3> Tidak Ada Acara </h3>
+              </div>`;
+  }
+  eventsContainer.innerHTML = events;
+  // simpan kalau ditambah
+  saveEvents();
+}
+
+// tambah event
+
+addEventSubmit.addEventListener("click", () =>{
+  const eventTitle = addEventTitle.value;
+  const eventTimeFrom = addEventFrom.value;
+  const eventTimeTo = addEventTo.value;
+
+  //validasi
+  if(eventTitle == "" || eventTimeFrom == "" || eventTimeTo == ""){
+    alert("Please fill all the fields");
+    return;
+  }
+
+  const timeFromArr = eventTimeFrom.split(":");
+  const timeToArr = eventTimeTo.split(":");
+
+  if(timeFromArr.length != 2 || timeToArr.length != 2 ||timeFromArr[0] > 23 || timeFromArr[1] > 59 || timeToArr[0] > 23 || timeToArr[1] > 59){
+    alert("Invalid Time Format");
+    return;
+  }
+
+  const timeFrom = convertTime (eventTimeFrom);
+  const timeTo = convertTime (eventTimeTo);
+
+  const newEvent = {
+    title : eventTitle,
+    time : timeFrom + " - " + timeTo,
+  };
+
+  let eventAdded = false;
+
+  // cek kalau eventarr tidak kosong
+  if(eventArr. length > 0){
+    // cek kalau hari sudah puna event lalu tambahkan event
+    eventArr.forEach((item) =>{
+      if(
+        item.day == activeDay &&
+        item.month == month + 1 &&
+        item.year == year
+      ){
+        item.events.push(newEvent);
+        eventAdded = true;
+      }
+    });
+    }
+
+    // kalau hari tidak ada event buat event baru
+    if(!eventAdded){
+      eventArr.push({
+        day: activeDay,
+        month: month + 1,
+        year: year,
+        events: [newEvent],
+      });
+    }
+
+    // hapus active dari add event form
+    addEventContainer.classList.remove("active")
+    addEventTitle.value="";
+    addEventFrom.value="";
+    addEventTo.value="";
+
+    // tampilkan added event 
+    updateEvents(activeDay);
+    
+    //tambah class event ke tanggal yang punya event
+    const activeDayElem = document.querySelector(".day.active");
+    if(!activeDayElem.classList.contains("event")){
+      activeDayElem.classList.add("event");
+    }
+  });
+
+function convertTime(time){
+  let timeArr = time.split(":");
+  let timeHour = timeArr[0];
+  let timeMin = timeArr[1];
+
+  let timeFormat = timeHour >= 12 ? "PM" : "AM";
+  timeHour = timeHour % 12 || 12;
+
+  return timeHour + ":" + timeMin + " " + timeFormat;
+}
+
+// hapus event
+
+eventsContainer.addEventListener("click", (e) => {
+  if(e.target.classList.contains("event")){
+    const eventTitle = e.target.children[0].children[1].innerHTML;
+
+    eventArr.forEach((event) =>{
+      if(
+        event.day == activeDay &&
+        event.month == month + 1 &&
+        event.year == year
+      ){
+        event.events.forEach((item,index) => {
+          if (item.title == eventTitle){
+            event.events.splice(index, 1);
+          }
+        });
+
+        //hapus class event kalau sudah tidak ada event
+
+        if(event.events.length == 0){
+          eventArr.splice(eventArr.indexOf(event),1);
+
+          const activeDayElem = document.querySelector(".day.active");
+          if (activeDayElem.classList.contains("event")){
+            activeDayElem.classList.remove("event");
+          }
+        }
+      }
+    });
+    //setelah hapus , update
+    updateEvents(activeDay);
+  }
+  });
+
+
+  // LOCAL STORAGE
+
+  function saveEvents(){
+    localStorage.setItem("events", JSON.stringify(eventArr));
+  }
+
+  function getEvents(){
+    if(localStorage.getItem("events" == null)){
+      return;
+    }
+    eventArr.push(...JSON.parse(localStorage.getItem("events")));
+  }

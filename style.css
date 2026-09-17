@@ -310,6 +310,7 @@ body {
     display: flex;
     align-items: center;
     pointer-events: none;
+
 }
 
 .events .event .title .event-title {
@@ -353,6 +354,17 @@ body {
 
 .events .event:hover::after {
     display: flex;
+}
+
+.events .no-event{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #878787;
 }
 
 .add-event-wrapper {
