@@ -5,13 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalender Dinamis</title>
+
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
 </head>
 
 <body>
 
     <div class="container">
+
+        <!-- ================= CALENDAR ================= -->
         <div class="left">
             <div class="calendar">
                 <div class="month">
@@ -29,51 +33,125 @@
                     <div>Saturday</div>
                 </div>
                 <div class="days">
-                    <!-- dijs -->
+                    <!-- Tanggal dibuat oleh JS -->
                 </div>
                 <div class="goto-today">
                     <div class="goto">
-                        <input type="text" placeholder="MM/YYYY" class="date-input">
-                        <button class="goto-btn">go</button>
+                        <input
+                            type="text"
+                            placeholder="MM/YYYY"
+                            class="date-input"
+                        >
+                        <button class="goto-btn">
+                            go
+                        </button>
                     </div>
-                    <button class="today-btn">today</button>
+                    <button class="today-btn">
+                        today
+                    </button>
                 </div>
             </div>
         </div>
+
+        <!-- ================= RIGHT / EVENT ================= -->
         <div class="right">
             <div class="today-date">
-                <div class="event-day">Sunday</div>
-                <div class="event-date">13 september</div>
+                <div class="event-day">
+                    Sunday
+                </div>
+                <div class="event-date">
+                    18 September 2026
+                </div>
             </div>
+            <!-- EVENT YANG SUDAH DIBUAT -->
             <div class="events">
-                    <!-- di js -->
+                <!-- Event dibuat oleh JS -->
             </div>
+
+            <!-- ================= ADD / EDIT EVENT ================= -->
             <div class="add-event-wrapper">
                 <div class="add-event-header">
-                    <div class="title">Add Event</div>
+                    <div class="title">
+                        Add Event
+                    </div>
                     <i class="fas fa-times close"></i>
                 </div>
                 <div class="add-event-body">
+                    <!-- Nama Event -->
                     <div class="add-event-input">
-                        <input type="text" placeholder="Event Name" class="event-name" />
+                        <input
+                            type="text"
+                            placeholder="Event Name"
+                            class="event-name"
+                        >
                     </div>
-                    <div class="add-event-input">
-                        <input type="text" placeholder="Event Time From" class="event-time-from" />
+                    <!-- WAKTU -->
+                    <div class="time-title">
+                        Time
                     </div>
-                    <div class="add-event-input">
-                        <input type="text" placeholder="Event Time Until" class="event-time-to" />
+                    <div class="time-picker">
+                        <!-- HOUR -->
+                        <div class="time-column">
+                            <label>Hour</label>
+                            <button
+                                class="time-display"
+                                id="hour-display">
+                                12
+                            </button>
+                            <div class="time-options" id="hour-options">
+                                <!-- JS -->
+                            </div>
+                        </div>
+                        <!-- MINUTE -->
+                        <div class="time-column">
+                            <label>Min</label>
+                            <button
+                                class="time-display"
+                                id="minute-display">
+                                00
+                            </button>
+                            <div class="time-options" id="minute-options">
+                                <!-- JS -->
+                            </div>
+                        </div>
+                        <!-- AM / PM -->
+                        <div class="time-column">
+                            <label>Period</label>
+                            <button
+                                class="time-display"
+                                id="period-display">
+                                AM
+                            </button>
+                            <div class="period-options" id="period-options">
+                                <button data-value="AM">
+                                    AM
+                                </button>
+                                <button data-value="PM">
+                                    PM
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- WAKTU YANG DIPILIH -->
+                    <div class="selected-time">
+                        <span id="selected-time-text">
+                            12:00 AM
+                        </span>
                     </div>
                 </div>
                 <div class="add-event-footer">
-                    <button class="add-event-btn">add</button>
+                    <button class="add-event-btn">
+                        Add
+                    </button>
                 </div>
             </div>
+            <!-- BUTTON + -->
+            <button class="add-event">
+                <i class="fas fa-plus"></i>
+            </button>
         </div>
-        <button class="add-event">
-            <i class="fas fa-plus"></i>
-        </button>
     </div>
 </body>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </html>

@@ -1,5 +1,5 @@
 :root {
-    --primary-clr: #b38add
+    --primary-clr: #b38add;
 }
 
 * {
@@ -17,6 +17,7 @@ body {
     background-color: antiquewhite;
 }
 
+/* ================= CONTAINER ================= */
 .container {
     position: relative;
     width: 1200px;
@@ -29,24 +30,27 @@ body {
     background-color: #373c4f;
 }
 
+/* ================= LEFT ================= */
 .left {
     width: 60%;
     padding: 20px;
 }
 
+/* ================= CALENDAR ================= */
 .calendar {
     position: relative;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+
     justify-content: space-between;
     color: #878895;
     border-radius: 5px;
     background-color: #fff;
 }
 
+/* BAYANGAN CALENDAR */
 .calendar::before,
 .calendar::after {
     content: "";
@@ -66,6 +70,7 @@ body {
     background-color: #a1aaafd7;
 }
 
+/* ================= MONTH ================= */
 .calendar .month {
     width: 100%;
     height: 150px;
@@ -85,10 +90,11 @@ body {
 
 .calendar .month .prev:hover,
 .calendar .month .next:hover {
-    color: var(--primary-clr)
+    color: var(--primary-clr);
 }
 
 
+/* ================= WEEKDAYS ================= */
 .calendar .weekdays {
     width: 100%;
     height: 100px;
@@ -109,6 +115,7 @@ body {
     justify-content: center;
 }
 
+/* ================= DAYS ================= */
 .calendar .days {
     width: 100%;
     display: flex;
@@ -127,7 +134,7 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: #f5f5f5ff;
+    background-color: #f5f5f5;
     border: 1px solid var(--primary-clr);
 }
 
@@ -141,6 +148,7 @@ body {
     color: #b3b3b3;
 }
 
+/* ACTIVE */
 .calendar .days .active {
     position: relative;
     font-size: 2rem;
@@ -155,19 +163,20 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    box-shadow: 0 0 10px 2px var(--primary-clr)
+    box-shadow: 0 0 10px 2px var(--primary-clr);
 }
 
 .calendar .days .today {
     font-size: 2rem;
 }
 
+/* EVENT MARKER */
 .calendar .days .event {
     position: relative;
 }
 
 .calendar .days .event::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 10%;
     left: 50%;
@@ -187,10 +196,7 @@ body {
     bottom: 20%;
 }
 
-.calendar .active.event {
-    padding-bottom: 10px;
-}
-
+/* ================= GOTO ================= */
 .calendar .goto-today {
     width: 100%;
     height: 50px;
@@ -212,11 +218,11 @@ body {
 }
 
 .calendar .goto-today .goto input {
-    width: 100%;
+    width: 220px;
     height: 30px;
     outline: none;
     border: none;
-    border-radius: 5px;
+    padding-left: 5px;
 }
 
 .calendar .goto-today button {
@@ -239,6 +245,7 @@ body {
     border-radius: 0;
 }
 
+/* ================= RIGHT ================= */
 .right {
     position: relative;
     width: 40%;
@@ -246,6 +253,7 @@ body {
     padding: 20px 0;
 }
 
+/* ================= TODAY DATE ================= */
 .right .today-date {
     width: 100%;
     height: 50px;
@@ -272,6 +280,7 @@ body {
     color: #878889;
 }
 
+/* ================= EVENTS ================= */
 .events {
     width: 100%;
     height: 100%;
@@ -283,19 +292,25 @@ body {
     padding: 4px;
 }
 
+/* EVENT CARD */
 .events .event {
     position: relative;
     width: 95%;
-    min-height: 70px;
+    min-height: 90px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     gap: 5px;
-    padding: 0 20px;
+    padding: 10px 20px;
     padding-left: 50px;
     color: #fff;
-    cursor: pointer;
-    background: linear-gradient(90deg, #3f4458, transparent);
+    background: linear-gradient(
+        90deg,
+        #3f4458,
+        transparent
+    );
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 .events .event:nth-child(even) {
@@ -303,14 +318,22 @@ body {
 }
 
 .events .event:hover {
-    background: linear-gradient(90deg, var(--primary-clr), transparent);
+    background: linear-gradient(
+        90deg,
+        var(--primary-clr),
+        transparent
+    );
 }
 
+/* EVENT TITLE */
 .events .event .title {
     display: flex;
     align-items: center;
-    pointer-events: none;
+}
 
+.events .event .title i {
+    color: var(--primary-clr);
+    font-size: 0.5rem;
 }
 
 .events .event .title .event-title {
@@ -319,44 +342,47 @@ body {
     margin-left: 20px;
 }
 
-.events .event .title i {
-    display: flex;
-    color: var(--primary-clr);
-    font-size: 0.5rem;
-}
-
-.events .event:hover .title i,
-.events .event:hover .event-time {
-    color: #fff;
-}
-
+/* EVENT TIME */
 .events .event .event-time {
     font-size: 0.8rem;
-    font-weight: 400;
+
     color: #878895;
     margin-left: 15px;
-    pointer-events: none;
+
 }
 
-.events .event::after {
-    content: "✔";
-    position: absolute;
-    top: 50%;
-    right: 0;
-    font-size: 3rem;
+/* EVENT BUTTON */
+.event-actions {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.3;
-    color: var(--primary-clr);
-    transform: translateY(-50%);
+    gap: 8px;
+    margin-top: 5px;
+    margin-left: 15px;
 }
 
-.events .event:hover::after {
-    display: flex;
+.event-actions button {
+    border: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
 }
 
-.events .no-event{
+.edit-event {
+    color: #fff;
+    background-color: var(--primary-clr);
+}
+
+.delete-event {
+    color: #fff;
+    background-color: #e57373;
+}
+
+.event-actions button:hover {
+    opacity: 0.8;
+}
+
+/* ================= NO EVENT ================= */
+.events .no-event {
     width: 100%;
     height: 100%;
     display: flex;
@@ -367,32 +393,58 @@ body {
     color: #878787;
 }
 
+/* ================================================= */
+/*                 ADD EVENT POPUP                  */
+/* ================================================= */
 .add-event-wrapper {
     position: absolute;
     bottom: 100px;
     left: 50%;
     width: 90%;
+    max-width: 430px;
     max-height: 0;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #fff;
     transform: translateX(-50%);
-    transition: max-height 0.5s;
+    transition: max-height 0.4s ease;
+    z-index: 20;
 }
 
+/* POPUP NORMAL */
 .add-event-wrapper.active {
-    max-height: 300px;
+    max-height: 500px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
+/* POPUP EDIT DI TENGAH */
+.add-event-wrapper.edit-mode {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    width: 430px;
+    max-height: 500px;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+
+/* ================= EVENT HEADER ================= */
 .add-event-header {
     width: 100%;
-    height: 50px;
+    height: 65px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 25px;
     color: #373c4f;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid #eee;
+}
+
+.add-event-header .title {
+    font-size: 1.4rem;
+    font-weight: 500;
 }
 
 .add-event-header .close {
@@ -404,86 +456,217 @@ body {
     color: var(--primary-clr);
 }
 
-.add-event-header .title {
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
+/* ================= EVENT BODY ================= */
 .add-event-body {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 20px;
-}
-
-.add-event-body .add-event-input {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.add-event-body .add-event-input input {
-    width: 100%;
-    height: 100%;
-    outline: none;
-    border: none;
-    border-bottom: 1px solid#f5f5f5ff;
-    padding: 0 10px;
-    font-size: 1rem;
-    font-weight: 400;
+    padding: 20px 25px;
     color: #373c4f;
 }
 
-.add-event-body .add-event-input input::placeholder {
-    color: #a5a5a5;
+/* EVENT NAME */
+.add-event-input {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.add-event-body .add-event-input input:focus {
+.add-event-input input {
+    width: 100%;
+    height: 45px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 0 10px;
+    font-size: 1rem;
+
+    color: #373c4f;
+}
+
+.add-event-input input:focus {
     border-color: var(--primary-clr);
 }
 
-.add-event-body .add-event-input input:focus::placeholder {
-    color: var(--primary-clr);
+/* ================= TIME ================= */
+.time-title {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 15px;
 }
 
-.add-event-footer{
+.time-picker {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+/* TIME COLUMN */
+.time-column {
+    position: relative;
+    text-align: center;
+}
+
+.time-column label {
+    display: block;
+    font-size: 14px;
+    color: #878895;
+    margin-bottom: 7px;
+}
+
+/* BUTTON YANG DITEKAN */
+.time-display {
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    color: #373c4f;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.time-display:hover {
+    border-color: var(--primary-clr);
+}
+
+.time-display.active {
+    border-color: var(--primary-clr);
+    box-shadow: 0 0 0 2px rgba(179,138,221,0.15);
+}
+
+/* ================= TIME OPTIONS ================= */
+.time-options {
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    height: 130px;
+    overflow-y: auto;
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    z-index: 50;
+}
+
+.time-options.active {
+    display: block;
+}
+
+/* OPTION */
+.time-option {
+    width: 100%;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    border: none;
+    background-color: #fff;
+    color: #373c4f;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-.add-event-btn{
-    height: 40px;
-    width: 40%;
+.time-option:hover {
+    background-color: #f3eafa;
+    color: var(--primary-clr);
+}
+
+.time-option.selected {
+    background-color: var(--primary-clr);
+    color: #fff;
+}
+
+/* SCROLLBAR */
+.time-options::-webkit-scrollbar {
+    width: 6px;
+}
+
+.time-options::-webkit-scrollbar-thumb {
+    background-color: var(--primary-clr);
+    border-radius: 10px;
+}
+
+/* ================= PERIOD ================= */
+.period-options {
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    z-index: 50;
+}
+
+.period-options.active {
+    display: block;
+}
+
+.period-options button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    background-color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    color: #373c4f;
+}
+
+.period-options button:hover {
+    background-color: #f3eafa;
+    color: var(--primary-clr);
+}
+
+.period-options button.selected {
+    background-color: var(--primary-clr);
+    color: #fff;
+}
+
+/* ================= SELECTED TIME ================= */
+.selected-time {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    color: #373c4f;
+    font-size: 15px;
+}
+
+/* ================= FOOTER ================= */
+.add-event-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 25px;
+}
+
+.add-event-btn {
+    width: 100%;
+    height: 45px;
     font-size: 1rem;
-    font-weight: 500;
-    outline: none;
+
     border: none;
     color: #fff;
     background-color: var(--primary-clr);
-    border-radius: 5px;
+    border-radius: 7px;
     cursor: pointer;
-    padding: 5px 10px;
-    border: 1px solid var(--primary-clr);
+}
+.add-event-btn:hover {
+    opacity: 0.85;
 }
 
-.add-event-btn:hover{
-    color: var(--primary-clr);
-    background-color: transparent;
-}
-
-.add-event{
+/* ================= PLUS BUTTON ================= */
+.add-event {
     position: absolute;
     bottom: 30px;
     right: 30px;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -496,10 +679,331 @@ body {
     cursor: pointer;
 }
 
-.add-event:hover{
+.add-event:hover {
     opacity: 1;
 }
 
-.add-event i{
+.add-event i {
     pointer-events: none;
+}
+
+/* ================= EDIT BACKDROP ================= */
+.edit-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 900;
+    display: none;
+}
+
+.edit-backdrop.active {
+    display: block;
+}
+
+/* =========================================
+   RESPONSIVE CALENDAR
+   ========================================= */
+/* TABLET */
+@media screen and (max-width: 1000px) {
+
+    body {
+        padding: 20px;
+        align-items: flex-start;
+    }
+
+    .container {
+        width: 100%;
+        min-height: auto;
+        flex-direction: column;
+    }
+
+    .left {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .right {
+        width: 100%;
+        min-height: 500px;
+        padding: 15px;
+    }
+
+    .calendar::before,
+    .calendar::after {
+        display: none;
+    }
+
+    .calendar .month {
+        height: 100px;
+        padding: 0 30px;
+    }
+
+    .calendar .weekdays {
+        height: 60px;
+        padding: 0 10px;
+        font-size: 0.9rem;
+    }
+
+    .calendar .days {
+        padding: 0 10px;
+    }
+
+    .calendar .days .day {
+        height: 70px;
+    }
+
+    .right .today-date {
+        margin-top: 20px;
+        padding: 0 30px;
+    }
+
+    .events {
+        max-height: 400px;
+    }
+
+    .add-event-wrapper {
+        width: 90%;
+        bottom: 80px;
+    }
+}
+
+/* HP */
+@media screen and (max-width: 600px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0;
+        border-radius: 8px;
+    }
+
+    .left {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .right {
+        width: 100%;
+        padding: 10px;
+        min-height: 450px;
+    }
+
+    /* BULAN */
+    .calendar .month {
+        height: 80px;
+        padding: 0 15px;
+        font-size: 1rem;
+    }
+
+    .calendar .month .prev,
+    .calendar .month .next {
+        font-size: 1rem;
+    }
+
+    /* NAMA HARI */
+    .calendar .weekdays {
+        height: 45px;
+        padding: 0 5px;
+        font-size: 0.65rem;
+    }
+
+    .calendar .weekdays div {
+        width: 14.28%;
+        text-align: center;
+    }
+
+    /* TANGGAL */
+    .calendar .days {
+        padding: 0 5px;
+        margin-bottom: 10px;
+        font-size: 0.75rem;
+    }
+
+    .calendar .days .day {
+        width: 14.28%;
+        height: 55px;
+    }
+
+    .calendar .days .active,
+    .calendar .days .today {
+        font-size: 1rem;
+    }
+
+    .calendar .days .event::after {
+        width: 50%;
+        height: 4px;
+        bottom: 10%;
+    }
+
+    /* MM/YYYY */
+    .calendar .goto-today {
+        height: auto;
+        padding: 0 5px;
+        margin-bottom: 15px;
+        gap: 5px;
+    }
+
+    .calendar .goto-today .goto {
+        width: 150px;
+    }
+
+    .calendar .goto-today .goto input {
+        width: 105px;
+        height: 30px;
+        font-size: 0.75rem;
+        padding: 0 5px;
+    }
+
+    .calendar .goto-today .goto button {
+        width: 40px;
+        padding: 5px;
+        font-size: 0.7rem;
+    }
+
+    .calendar .goto-today > .today-btn {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+
+    /* BAGIAN EVENT */
+    .right .today-date {
+        height: auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding: 0 10px;
+        gap: 5px;
+    }
+
+    .today-date .event-day {
+        font-size: 1.3rem;
+    }
+
+    .today-date .event-date {
+        font-size: 0.75rem;
+    }
+
+    .events {
+        max-height: 350px;
+        padding: 2px;
+    }
+
+    .events .event {
+        width: 100%;
+        min-height: 65px;
+        padding: 0 15px;
+        padding-left: 30px;
+    }
+
+    .events .event .title .event-title {
+        font-size: 0.85rem;
+        margin-left: 10px;
+    }
+
+    .events .event .event-time {
+        font-size: 0.7rem;
+        margin-left: 10px;
+    }
+
+    .events .event::after {
+        font-size: 2rem;
+    }
+
+    .events .no-event {
+        font-size: 1rem;
+    }
+
+    /* POPUP ADD EVENT */
+    .add-event-wrapper {
+        width: 90%;
+        bottom: 75px;
+    }
+
+    .add-event-header {
+        height: 45px;
+        padding: 0 15px;
+    }
+
+    .add-event-header .title {
+        font-size: 1rem;
+    }
+
+    .add-event-header .close {
+        font-size: 1.2rem;
+    }
+
+    .add-event-body {
+        padding: 15px;
+    }
+
+    .add-event-body .add-event-input {
+        height: 38px;
+    }
+
+    .add-event-body .add-event-input input {
+        font-size: 0.8rem;
+    }
+
+    .add-event-footer {
+        padding: 15px;
+    }
+
+    .add-event-btn {
+        width: 50%;
+        height: 38px;
+        font-size: 0.85rem;
+    }
+
+    /* TOMBOL + */
+    .add-event {
+        width: 35px;
+        height: 35px;
+        right: 15px;
+        bottom: 20px;
+        font-size: 0.8rem;
+    }
+}
+
+/* HP SANGAT KECIL */
+@media screen and (max-width: 400px) {
+    .calendar .month {
+        padding: 0 10px;
+        font-size: 0.9rem;
+    }
+
+    .calendar .weekdays {
+        font-size: 0.55rem;
+    }
+
+    .calendar .days .day {
+        height: 45px;
+        font-size: 0.7rem;
+    }
+
+    .calendar .days .active,
+    .calendar .days .today {
+        font-size: 0.9rem;
+    }
+
+    .calendar .goto-today .goto {
+        width: 135px;
+    }
+
+    .calendar .goto-today .goto input {
+        width: 95px;
+    }
+
+    .calendar .goto-today .goto button {
+        width: 40px;
+    }
+
+    .today-date .event-day {
+        font-size: 1.1rem;
+    }
+
+    .today-date .event-date {
+        font-size: 0.65rem;
+    }
 }
