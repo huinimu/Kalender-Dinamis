@@ -687,19 +687,6 @@ body {
     pointer-events: none;
 }
 
-/* ================= EDIT BACKDROP ================= */
-.edit-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.35);
-    z-index: 900;
-    display: none;
-}
-
-.edit-backdrop.active {
-    display: block;
-}
-
 /* =========================================
    RESPONSIVE CALENDAR
    ========================================= */

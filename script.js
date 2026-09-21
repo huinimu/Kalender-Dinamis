@@ -1,6 +1,7 @@
 /* ================================================= */
 /*                 ELEMENT CALENDAR                  */
 /* ================================================= */
+// meta
 const calendar = document.querySelector(".calendar");
 const date = document.querySelector(".date");
 const daysContainer = document.querySelector(".days");
@@ -16,6 +17,7 @@ const eventsContainer = document.querySelector(".events");
 /* ================================================= */
 /*                  EVENT POPUP                      */
 /* ================================================= */
+// yuni
 const addEventBtn = document.querySelector(".add-event");
 const addEventContainer = document.querySelector(".add-event-wrapper");
 const addEventCloseBtn = document.querySelector(".close");
@@ -25,6 +27,7 @@ const addEventSubmit = document.querySelector(".add-event-btn");
 /* ================================================= */
 /*                  TIME ELEMENT                     */
 /* ================================================= */
+// yuni
 const hourDisplay = document.querySelector("#hour-display");
 const minuteDisplay = document.querySelector("#minute-display");
 const periodDisplay = document.querySelector("#period-display");
@@ -36,6 +39,7 @@ const selectedTimeText = document.querySelector("#selected-time-text");
 /* ================================================= */
 /*                    DATE                           */
 /* ================================================= */
+//meta
 let today = new Date();
 let activeDay = today.getDate();
 let month = today.getMonth();
@@ -44,6 +48,7 @@ let year = today.getFullYear();
 /* ================================================= */
 /*                   MONTHS                          */
 /* ================================================= */
+// meta
 const months = [
     "January",
     "February",
@@ -62,17 +67,21 @@ const months = [
 /* ================================================= */
 /*                EVENT DATA                         */
 /* ================================================= */
+// yuni
+// menyimpan data
 let eventArr = [];
 let editingEventIndex = null;
 
 /* ================================================= */
 /*              LOAD LOCAL STORAGE                   */
 /* ================================================= */
+// yuni
+// tersimpan di browser
 function getEvents() {
     const savedEvents = localStorage.getItem("events");
     if (savedEvents) {
         try {
-            eventArr = JSON.parse(savedEvents);
+            eventArr = JSON.parse(savedEvents); //mengubah dat jadi js
         } catch (error) {
             eventArr = [];
         }
@@ -82,16 +91,18 @@ function getEvents() {
 /* ================================================= */
 /*               SAVE EVENT                          */
 /* ================================================= */
+// yuni
 function saveEvents() {
     localStorage.setItem(
         "events",
-        JSON.stringify(eventArr)
+        JSON.stringify(eventArr) //menguabh ke json
     );
 }
 
 /* ================================================= */
 /*                TIME DATA                          */
 /* ================================================= */
+// yuni
 let selectedHour = "12";
 let selectedMinute = "00";
 let selectedPeriod = "AM";
@@ -99,6 +110,7 @@ let selectedPeriod = "AM";
 /* ================================================= */
 /*             CREATE HOUR OPTIONS                   */
 /* ================================================= */
+// yuni
 function createHourOptions() {
     hourOptions.innerHTML = "";
     for (let i = 1; i <= 12; i++) {
@@ -125,6 +137,7 @@ function createHourOptions() {
 /* ================================================= */
 /*             CREATE MINUTE OPTIONS                 */
 /* ================================================= */
+// yuni
 function createMinuteOptions() {
     minuteOptions.innerHTML = "";
     for (let i = 0; i < 60; i++) {
@@ -154,6 +167,7 @@ function createMinuteOptions() {
 /* ================================================= */
 /*             PERIOD OPTIONS                       */
 /* ================================================= */
+// yuni
 function createPeriodOptions() {
     const buttons =
         periodOptions.querySelectorAll("button");
@@ -179,6 +193,7 @@ function createPeriodOptions() {
 /* ================================================= */
 /*          UPDATE SELECTED TIME                     */
 /* ================================================= */
+// yuni
 function updateSelectedTime() {
     selectedTimeText.textContent =
         selectedHour +
@@ -191,6 +206,7 @@ function updateSelectedTime() {
 /* ================================================= */
 /*          UPDATE SELECTED CLASS                    */
 /* ================================================= */
+// yuni
 function updateSelectedClass(container, value) {
     const buttons =
         container.querySelectorAll(".time-option");
@@ -205,6 +221,7 @@ function updateSelectedClass(container, value) {
 /* ================================================= */
 /*               TIME DISPLAY CLICK                  */
 /* ================================================= */
+// yuni
 hourDisplay.addEventListener("click", function (e) {
     e.stopPropagation();
     closeTimeOptions();
@@ -227,6 +244,7 @@ periodDisplay.addEventListener("click", function (e) {
 /* ================================================= */
 /*             CLOSE TIME OPTIONS                    */
 /* ================================================= */
+// yuni
 function closeTimeOptions() {
     hourOptions.classList.remove("active");
     minuteOptions.classList.remove("active");
@@ -239,6 +257,7 @@ function closeTimeOptions() {
 /* ================================================= */
 /*              CLICK OUTSIDE TIME                   */
 /* ================================================= */
+// yuni
 document.addEventListener("click", function () {
     closeTimeOptions();
 });
@@ -246,6 +265,7 @@ document.addEventListener("click", function () {
 /* ================================================= */
 /*             CALENDAR FUNCTION                     */
 /* ================================================= */
+// meta
 function initCalendar() {
     const firstDay =
         new Date(year, month, 1);
@@ -274,6 +294,7 @@ function initCalendar() {
         year;
     let days = "";
     /* ================= PREVIOUS MONTH ================= */
+    // meta
     for (let x = day; x > 0; x--) {
         days += `
             <div class="day prev-date">
@@ -282,6 +303,7 @@ function initCalendar() {
         `;
     }
     /* ================= CURRENT MONTH ================= */
+    // yuni
     for (let i = 1; i <= lastDate; i++) {
         let event = false;
         eventArr.forEach(eventObj => {
@@ -330,6 +352,7 @@ function initCalendar() {
         }
     }
     /* ================= NEXT MONTH ================= */
+    // meta
     for (let j = 1; j <= nextDays; j++) {
         days += `
             <div class="day next-date">
@@ -346,6 +369,7 @@ function initCalendar() {
 /* ================================================= */
 /*                PREVIOUS MONTH                     */
 /* ================================================= */
+// meta
 function prevMonth() {
     month--;
     if (month < 0) {
@@ -359,6 +383,7 @@ function prevMonth() {
 /* ================================================= */
 /*                  NEXT MONTH                       */
 /* ================================================= */
+// meta
 function nextMonth() {
     month++;
     if (month > 11) {
@@ -380,6 +405,7 @@ next.addEventListener(
 /* ================================================= */
 /*                    TODAY                          */
 /* ================================================= */
+// meta
 todayBtn.addEventListener("click", function () {
     today = new Date();
     month = today.getMonth();
@@ -391,6 +417,7 @@ todayBtn.addEventListener("click", function () {
 /* ================================================= */
 /*                  GO TO DATE                       */
 /* ================================================= */
+// meta
 dateInput.addEventListener("input", function () {
     dateInput.value =
         dateInput.value.replace(
@@ -438,6 +465,7 @@ function gotoDate() {
 /* ================================================= */
 /*              DAY LISTENER                         */
 /* ================================================= */
+// meta
 function addListeners() {
     const days =
         document.querySelectorAll(".day");
@@ -482,6 +510,7 @@ function addListeners() {
 /* ================================================= */
 /*             SET ACTIVE DAY                        */
 /* ================================================= */
+// meta
 function setActiveDay() {
     const days =
         document.querySelectorAll(".day");
@@ -510,6 +539,7 @@ function setActiveDay() {
 /* ================================================= */
 /*             GET ACTIVE DAY                        */
 /* ================================================= */
+// meta
 function getActiveDay(dayNumber) {
     const selectedDate =
         new Date(
@@ -534,6 +564,8 @@ function getActiveDay(dayNumber) {
 /* ================================================= */
 /*              UPDATE EVENTS                       */
 /* ================================================= */
+// yuni
+// mengecek tanggal,bulan,tahun
 function updateEvents(dayNumber) {
     let events = "";
     eventArr.forEach(
@@ -548,7 +580,7 @@ function updateEvents(dayNumber) {
                 Number(eventObj.year) ===
                     Number(year)
             ) {
-                eventObj.events.forEach(
+                eventObj.events.forEach( //jika berhasil
                     (event, eventIndex) => {
                         events += `
                             <div class="event">
@@ -582,7 +614,7 @@ function updateEvents(dayNumber) {
             }
         }
     );
-    if (events === "") {
+    if (events === "") { //tidak ada event
         events = `
             <div class="no-event">
                 <h3>
@@ -591,12 +623,13 @@ function updateEvents(dayNumber) {
             </div>
         `;
     }
-    eventsContainer.innerHTML = events;
+    eventsContainer.innerHTML = events; //menampilkan ke html
 }
 
 /* ================================================= */
 /*              OPEN ADD EVENT                       */
 /* ================================================= */
+// yuni
 addEventBtn.addEventListener(
     "click",
     function (e) {
@@ -622,6 +655,7 @@ addEventBtn.addEventListener(
 /* ================================================= */
 /*              CLOSE EVENT POPUP                    */
 /* ================================================= */
+// yuni
 addEventCloseBtn.addEventListener(
     "click",
     function () {
@@ -643,6 +677,7 @@ function closeEventPopup() {
 /* ================================================= */
 /*             RESET FORM                            */
 /* ================================================= */
+// yuni
 function resetForm() {
     addEventTitle.value = "";
     selectedHour = "12";
@@ -667,6 +702,7 @@ function resetForm() {
 /* ================================================= */
 /*               ADD EVENT                           */
 /* ================================================= */
+// yuni
 addEventSubmit.addEventListener(
     "click",
     function () {
@@ -758,6 +794,7 @@ addEventSubmit.addEventListener(
 /* ================================================= */
 /*                EDIT EVENT                         */
 /* ================================================= */
+// yuni
 eventsContainer.addEventListener(
     "click",
     function (e) {
@@ -870,7 +907,7 @@ eventsContainer.addEventListener(
             if (
                 eventArr[
                     mainIndex
-                ].events.length === 0
+                ].events.length === 0 //mengetahui jumlah data
             ) {
                 eventArr.splice(
                     mainIndex,
@@ -894,6 +931,6 @@ createMinuteOptions();
 
 createPeriodOptions();
 
-updateSelectedTime();
+updateSelectedTime(); //update tampilan waktu yg dipilih
 
 initCalendar();
